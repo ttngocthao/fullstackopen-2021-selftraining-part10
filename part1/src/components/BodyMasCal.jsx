@@ -1,9 +1,23 @@
-import { Formik, useField } from 'formik';
+import { Formik } from 'formik';
 import React from 'react'
-import { Pressable, View ,Text, Alert} from 'react-native';
+import {  View , Alert} from 'react-native';
 import Button from './Button';
 import FormikTextInput from './FormikTextInput';
-import TextInput from './TextInput';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+    mass:yup
+        .number()
+        .min(1,'Weight must be greater or equal to 1')
+        .required('Weight is required'),
+    height: yup
+        .number()
+        .min(0.5,'Height must be greater or equal to 0.5')
+        .max(3,'Height is in metre')
+        .required('Height is required')
+    
+})
+
 const initialValues ={
     mass:'',
     height:''
@@ -43,7 +57,11 @@ const BodyMasCal = () => {
     }
     return (
         <View>
-           <Formik initialValues={initialValues} onSubmit={onSubmit}>
+           <Formik 
+                initialValues={initialValues} 
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+            >
                 {({handleSubmit})=><BodyMassIndexForm onPress={handleSubmit}/>}
             </Formik>  
         </View>
