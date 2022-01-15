@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
 });
 const navList = [
   {buttonLabel:'Repositories',path:'/',orderInList:1},
-  {buttonLabel:'Sign in',path:'/singin',orderInList:2},
+  {buttonLabel:'Sign in',path:'/signin',orderInList:2},
+  {buttonLabel:'BodyMassCal',path:'/bodyMassCal',orderInList:3},
 ]
 const AppBar = () => {
   return <View style={styles.container}>

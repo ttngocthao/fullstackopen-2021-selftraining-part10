@@ -7,6 +7,8 @@ import AppBar from './AppBar'
 import FlexBox from './FlexBox'
 import { Redirect, Route, Switch } from 'react-router-native'
 import SignIn from './SignIn'
+import BodyMasCal from './BodyMasCal'
+
 const styles = StyleSheet.create({
     container:{
         marginTop:Constants.statusBarHeight,
@@ -26,7 +28,7 @@ const Main = () => {
             <AppBar/>
            
                 <Route path={'/signin'} exact component={SignIn}/>
-                    
+                <Route path={'/bodyMassCal'} exact component={BodyMasCal}/>    
                 <Route path={'/'} exact component={ReposList}/>
                     
         </View>
