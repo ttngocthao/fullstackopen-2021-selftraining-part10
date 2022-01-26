@@ -1,5 +1,8 @@
+import { useQuery } from '@apollo/client';
 import React,{useState,useEffect} from 'react'
 import { FlatList,View, StyleSheet,Text} from 'react-native'
+import { useRepositories } from '../hooks/repository';
+import { GET_REPOSITORIES } from '../graphql/queries';
 import ReposItem from './ReposItem';
 
 // const repositories = [
@@ -59,34 +62,24 @@ const ItemSeparator = ()=><View style={styles.separator}/>
 
 
 const ReposList = () => {
-    const [repositories,setRepositories]=useState([]);
-    const [error,setError] = useState(false);
-    const fetchData = async ()=>{
-      try {
-         const res = await fetch('http://192.168.0.58:15000/api/repositories')
-      const json =await res.json();
-      console.log('data',json)
-      const mappedData = json.edges.map(item=>{
-        const {node:{id,description,fullName,language,forksCount,ratingAverage,stargazersCount,reviewCount,ownerAvatarUrl}}=item
-        return ({
-          id,description,fullName,language,forksCount,stargazersCount,reviewCount,ratingAverage,ownerAvatarUrl
-      })})
-      setRepositories(mappedData)
-      } catch (error) {
-        setError(true)
-        console.log(error)
-      }
-     
+   const {data,loading,error} = useRepositories();
+ 
+  
+    
+    if(loading){
+      return <Text>Loading...</Text>
     }
-    useEffect(()=>{
-      fetchData();
-    },[])
+
     if(error){
+      console.log('error',error)
       return <Text>Error!</Text>
-    }
+    } 
+
+    
+
     return (
         <FlatList
-            data={repositories}
+            data={data}
             renderItem={ReposItem}
             keyExtractor={item=>item.id}
             ItemSeparatorComponent={ItemSeparator}
