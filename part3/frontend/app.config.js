@@ -1,5 +1,6 @@
-{
-  "expo": {
+import 'dotenv/config'
+
+export default {
     "name": "fullstackopen-2021-selftraining_part10",
     "slug": "fullstackopen-2021-selftraining_part10",
     "version": "1.0.0",
@@ -27,6 +28,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    extra:{
+      env: process.env.ENV,
+      apolloUri: process.env.APOLLO_URI
     }
   }
-}
+
