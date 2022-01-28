@@ -8,7 +8,7 @@ import Constants from 'expo-constants';
 const apolloClient = createApolloClient();
 
 export default function App() {
-  console.log('constants manifest ====>',Constants.manifest);
+ 
   return (
     <>
     <NativeRouter>
