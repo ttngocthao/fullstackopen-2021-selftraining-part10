@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import Text from './Text'
 import {Formik} from 'formik'
 import FormikTextInput from './FormikTextInput'
@@ -6,6 +6,8 @@ import Button from './Button'
 import { View } from 'react-native'
 import * as yup from 'yup'
 import { useSignIn } from '../hooks/useSignIn'
+
+import {Redirect,withRouter} from 'react-router-native'
 
 const validationSchema =yup.object().shape({
     username: yup
@@ -18,8 +20,9 @@ const validationSchema =yup.object().shape({
     .required('Password is required'),
 })
 
-const SignIn = () => {
+const SignIn = withRouter(({history}) => {
     const [signIn,result] = useSignIn();
+    const [waiting,setWaiting] = useState(false);
     const initialValues={
         username:'',
         password:''
@@ -27,9 +30,11 @@ const SignIn = () => {
     const onSubmit=async(values)=>{
         const {username,password}= values;
         try {
-         await signIn({username,password})
-          console.log('res',result?.data.authenticate.accessToken)
-          
+           
+            setWaiting(true)
+            await signIn({username,password})
+            history.push("/")
+        
             
         } catch (error) {
             console.log(error)
@@ -38,6 +43,9 @@ const SignIn = () => {
     }
     return (
         <View style={{padding:10}}>
+            <Text>
+                {waiting ? 'Waiting please': ''}
+            </Text>
             <Formik 
                 validationSchema={validationSchema}
                 initialValues={initialValues} 
@@ -51,6 +59,6 @@ const SignIn = () => {
         </View>
       
     )
-}
+})
 
 export default SignIn
